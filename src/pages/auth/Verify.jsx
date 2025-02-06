@@ -32,7 +32,7 @@ const VerifyOtp = () => {
       );
 
       if (response.data.status === 1) {
-        navigate('/profile'); // Redirect after successful OTP verification
+        navigate('/sign-in'); // Redirect after successful OTP verification
       } else {
         setError(response.data.message || 'OTP verification failed');
       }
