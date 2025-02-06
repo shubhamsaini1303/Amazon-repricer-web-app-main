@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -13,15 +14,19 @@ const Login = () => {
     const data = { email, password };
 
     try {
-      const response = await axios.post(`${process.env.API_BASE_URL}${process.env.USER_BASE_URL}/sign-in`, data);
-      
+      const response = await axios.post(
+        `${process.env.API_BASE_URL}${process.env.USER_BASE_URL}/sign-in`,
+        data
+      );
+
       if (response.data.status === 1) {
-        navigate("/");
+        toast.success("Login successful!", { position: "top-right" });
+        setTimeout(() => navigate("/"), 2000);
       } else {
-        setError("Invalid email or password");
+        toast.error("Invalid email or password", { position: "top-right" });
       }
     } catch (err) {
-      setError("Something went wrong. Please try again.");
+      toast.error("Something went wrong. Please try again.", { position: "top-right" });
       console.error(err);
     }
   };
@@ -53,7 +58,6 @@ const Login = () => {
               required
             />
           </div>
-          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
           <button
             type="submit"
             className="w-full text-white bg-[#775DDE] py-2 rounded-lg text-lg font-semibold transition-all transform hover:scale-105 focus:ring-2 focus:ring-offset-2 "
@@ -62,10 +66,11 @@ const Login = () => {
           </button>
         </form>
         <p className="text-center text-sm mt-4 text-gray-600">
-          Don't have an account? 
+          Don't have an account?
           <Link to="/sign-up" className="text-blue-500 ml-1 hover:underline">Sign Up</Link>
         </p>
       </div>
+      <ToastContainer />
     </div>
   );
 };
