@@ -1,1 +1,1 @@
-install - Shadcn.ui , axios , react-redux , redux-toolkit, react-toastify
+install - Shadcn.ui , axios , react-redux , redux-toolkit, react-toastify   
